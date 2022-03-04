@@ -59,7 +59,8 @@ grafimss_histogram <- function(datos,
   ggplot(datos, aes(!!x)) +
     geom_histogram(binwidth = binwidth,
                    bins = bins,
-                   fill = verde_oscuro) +
+                   fill = verde_oscuro,
+                   color = gris) +
     labs(x = etiqueta_x, 
          y = "Frecuencia", 
          title = titulo) +
@@ -139,4 +140,28 @@ grafimss_pastel_bin <- function(datos,
           axis.ticks  = element_blank(),
           panel.border = element_blank(),
           panel.grid.major.y = element_blank())
+}
+
+# Gráfica linear para dos variables
+grafimss_linea <- function(datos,
+                           x,
+                           y,
+                           titulo = NULL,
+                           etiqueta_x = NULL,
+                           etiqueta_y = NULL, 
+                           step = FALSE, ...){
+  x <- enquo(x)
+  y <- enquo(y)
+  # Gráfica linear
+  graf_linear <- ggplot(datos, aes(!!x, !!y)) +
+                   tema_imss
+  # Gráfica linear tipo "step"
+  if(step == TRUE){
+    return(graf_linear + 
+            geom_step(color = verde_oscuro,
+                      size = 2))
+  }
+  return(graf_linear + 
+           geom_line(color = verde_oscuro,
+                     size = 2))
 }
