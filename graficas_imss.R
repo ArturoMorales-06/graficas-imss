@@ -16,8 +16,9 @@ dorado <- "#B38E5D"
 
 # Definicón del tema del IMSS
 require(ggplot2)
-tema_imss <- theme(plot.title = element_text(size = 18, hjust = 0.5),
-                   axis.title = element_text(size = 12),
+tema_imss <- theme(plot.title = element_text(size = 21, hjust = 0.5),
+                   axis.title = element_text(size = 15),
+                   axis.text = element_text(size = 14),
                    text = element_text(family = "Montserrat"),
                    panel.grid.major.y = element_line(size = 0.2,
                                                      color = gris),
@@ -93,6 +94,7 @@ grafimss_col <- function(datos,
                 geom_col(fill = verde_oscuro,
                          width = 0.75) +
                 geom_text(vjust = -0.2,
+                          size = 8,
                           family = "Montserrat") +
                 labs(x = etiqueta_x,
                      title = titulo) +
@@ -164,4 +166,22 @@ grafimss_linea <- function(datos,
   return(graf_linear + 
            geom_line(color = verde_oscuro,
                      size = 2))
+}
+
+# Gráfica "boxplot" para una variable numérica
+grafimss_boxplot <- function(datos,
+                             x = "",
+                             y,
+                             titulo = NULL,
+                             etiqueta_x = NULL,
+                             etiqueta_y = NULL){
+  x <- enquo(x)
+  y <- enquo(y)
+  # Gráfica "boxplot"
+  ggplot(datos, aes(x = !!x, y = !!y)) +
+    geom_boxplot() +
+    labs(title = titulo,
+         x = etiqueta_x, 
+         y = etiqueta_y) +
+    tema_imss
 }
